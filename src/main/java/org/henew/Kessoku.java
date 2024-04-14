@@ -6,7 +6,7 @@ import java.sql.*;
  * ¡Bienvenido a Kessoku, el mundo de las conexiones de bases de datos! 💾✨
  * Aquí encontrarás una clase para realizar consultas y obtener datos de una base de datos.
  */
-public class Kessoku
+public class Kessoku implements Hitori
 {
 
     private final String user; // El valiente aventurero que se aventura a conectar: el usuario. 👤
