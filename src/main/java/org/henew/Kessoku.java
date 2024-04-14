@@ -6,7 +6,7 @@ import java.sql.*;
  * ¡Bienvenido a Kessoku, el mundo de las conexiones de bases de datos! 💾✨
  * Aquí encontrarás una clase para realizar consultas y obtener datos de una base de datos.
  */
-public class Kessoku implements Hitori
+public class Kessoku implements Hitori, Kita, Nijika,Ryo
 {
 
     private final String user; // El valiente aventurero que se aventura a conectar: el usuario. 👤
@@ -50,7 +50,6 @@ public class Kessoku implements Hitori
      */
     public ResultSet queryExecute( String query )
     {
-        Statement statement;
         ResultSet resultSet = null;
 
         query = query.replaceAll( "['\"\\\\]", "\\\\$0" );

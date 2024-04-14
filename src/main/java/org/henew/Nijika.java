@@ -1,64 +1,60 @@
 package org.henew;
 
-import org.henew.queryBuilder.Insert;
+import org.henew.queryBuilder.Update;
 
 public interface Nijika extends Starry
 {
-    Insert insertBuilder = new Insert();
+    Update updateBuilder = new Update();
 
     /**
-     * Inserta datos en una tabla especificada con nombres de columnas proporcionados.
-     * Porque a veces necesitas llenar las cosas con datos... como si fueran una hoja en blanco. 📝
+     * Actualiza los datos en una tabla especificada.
+     * ¡Porque a veces necesitas refrescar las cosas! 🔄
      *
-     * @param table      el nombre de la tabla en la que se insertarán los datos.
-     * @param columns    los nombres de las columnas en las que se insertarán los datos.
-     * @param valuesList una matriz de valores a insertar, donde cada fila corresponde a los valores de una fila.
+     * @param table       el nombre de la tabla en la que se actualizarán los datos.
+     * @param columnNames los nombres de las columnas que se actualizarán.
+     * @param values      los valores que se utilizarán para actualizar las columnas respectivas.
      */
-    default void insertInto( String table, String[] columns, String[]... valuesList )
+    default void update( String table, String[] columnNames, Object[] values )
     {
-        String preQuery = insertBuilder.insert( table, columns, valuesList );
-
-        queryUpdate( String.valueOf( preQuery ) );
-    }
-
-    /**
-     * Inserta datos en una tabla sin especificar columnas.
-     * Porque a veces la improvisación es la clave. 🎭
-     *
-     * @param table      el nombre de la tabla en la que se insertarán los datos.
-     * @param valuesList una lista de arreglos de valores a insertar en las columnas correspondientes.
-     */
-    default void insertIntoSimple( String table, String[]... valuesList )
-    {
-        String preQuery = insertBuilder.insertSimple( table, valuesList );
+        String preQuery = updateBuilder.update( table, columnNames, values );
 
         queryUpdate( preQuery );
+
     }
 
     /**
-     * Copia todos los datos de una tabla a otra.
-     * Porque a veces necesitas duplicar tus éxitos. 📝✨
+     * Actualiza los datos en una tabla especificada con una condición.
+     * Porque a veces necesitas ser selectivo sobre lo que actualizas. 😉
      *
-     * @param sourceTable      el nombre de la tabla de origen.
-     * @param destinationTable el nombre de la tabla de destino.
+     * @param table       el nombre de la tabla en la que se actualizarán los datos.
+     * @param columnNames los nombres de las columnas que se actualizarán.
+     * @param values      los valores que se utilizarán para actualizar las columnas respectivas.
+     * @param condition   la condición que debe cumplirse para la actualización.
      */
-    default void copyTable( String sourceTable, String destinationTable )
+    default void update( String table, String[] columnNames, Object[] values, String condition )
     {
-        queryUpdate( insertBuilder.insertCopy( sourceTable, destinationTable ) );
-    }
-
-    /**
-     * Copia datos específicos de una tabla a otra.
-     * Porque a veces necesitas seleccionar solo lo mejor. 🏆
-     *
-     * @param sourceTable      el nombre de la tabla de origen.
-     * @param destinationTable el nombre de la tabla de destino.
-     * @param columns          los nombres de las columnas que se copiarán.
-     */
-    default void copyTable( String sourceTable, String destinationTable, String... columns )
-    {
-        String preQuery = insertBuilder.insertCopy( sourceTable, destinationTable, columns );
+        String preQuery = updateBuilder.update( table, columnNames, values, condition );
 
         queryUpdate( preQuery );
+
+    }
+
+    /**
+     * Actualiza una columna con los resultados de una subconsulta limitada.
+     * ¡Porque a veces necesitas un toque de magia SQL! 🎩✨
+     *
+     * @param table                 la tabla en la que se actualizará la columna.
+     * @param columnName            el nombre de la columna que se actualizará.
+     * @param condition             la condición que debe cumplirse para la actualización.
+     * @param tableSubConsult       la tabla de la subconsulta.
+     * @param limit                 el límite de resultados para la subconsulta.
+     * @param columnNamesSubConsult los nombres de las columnas en la subconsulta.
+     */
+    default void updateSubConsult( String table, String columnName, String condition, String tableSubConsult, int limit, String... columnNamesSubConsult )
+    {
+        String preQuery = updateBuilder.updateSubConsult( table, columnName, condition, tableSubConsult, limit, columnNamesSubConsult );
+
+        queryUpdate( preQuery );
+
     }
 }
