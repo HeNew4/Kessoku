@@ -13,11 +13,12 @@ public class Concatenate
      * @param elements los elementos a concatenar
      * @return una cadena que representa la concatenación de los elementos
      */
-    protected String simple( String... elements )
+    @SafeVarargs
+    protected final <T> String simple( T... elements )
     {
         StringBuilder query = new StringBuilder();
 
-        for ( String element : elements )
+        for ( T element : elements )
         {
             query.append( element );
             query.append( ", " );
@@ -34,13 +35,14 @@ public class Concatenate
      * @param elements los elementos a concatenar
      * @return una cadena que representa la concatenación de los elementos entre paréntesis
      */
-    protected String brackets( String... elements )
+    @SafeVarargs
+    protected final <T> String brackets( T... elements )
     {
         StringBuilder query = new StringBuilder();
 
         query.append( "(" );
 
-        for ( String element : elements )
+        for ( T element : elements )
         {
             query.append( element );
             query.append( ", " );
@@ -60,15 +62,16 @@ public class Concatenate
      * @param elements las matrices de elementos a concatenar
      * @return una cadena que representa la concatenación de las matrices de elementos entre paréntesis
      */
-    protected String brackets( String[]... elements )
+    @SafeVarargs
+    protected final <T> String brackets( T[]... elements )
     {
         StringBuilder query = new StringBuilder();
 
-        for ( String[] element : elements )
+        for ( T[] element : elements )
         {
             query.append( "(" );
 
-            for ( String value : element )
+            for ( T value : element )
             {
                 query.append( value );
                 query.append( ", " );

@@ -13,11 +13,13 @@ public class Insert
         this.concatenate = new Concatenate();
     }
 
-    public String insert(String table, String[] columns, String[]... valuesList) {
+    @SafeVarargs
+    public final <T> String insert( String table, String[] columns, T[]... valuesList ) {
         return buildInsertQuery(table, concatenate.brackets(columns), concatenate.brackets(valuesList));
     }
 
-    public String insertSimple(String table, String[]... valuesList) {
+    @SafeVarargs
+    public final <T> String insertSimple( String table, T[]... valuesList ) {
         return buildInsertQuery(table, null, concatenate.brackets(valuesList));
     }
 

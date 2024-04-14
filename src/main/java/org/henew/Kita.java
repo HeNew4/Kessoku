@@ -14,11 +14,12 @@ public interface Kita extends Starry
      * @param columns    los nombres de las columnas en las que se insertarán los datos.
      * @param valuesList una matriz de valores a insertar, donde cada fila corresponde a los valores de una fila.
      */
-    default void insertInto( String table, String[] columns, String[]... valuesList )
+    @SuppressWarnings( "unchecked" )
+    default <T> void insertInto( String table, String[] columns, T[]... valuesList )
     {
         String preQuery = insertBuilder.insert( table, columns, valuesList );
 
-        queryUpdate( String.valueOf( preQuery ) );
+        queryUpdate( preQuery );
     }
 
     /**
@@ -28,7 +29,7 @@ public interface Kita extends Starry
      * @param table      el nombre de la tabla en la que se insertarán los datos.
      * @param valuesList una lista de arreglos de valores a insertar en las columnas correspondientes.
      */
-    default void insertIntoSimple( String table, String[]... valuesList )
+    default <T> void insertIntoSimple( String table, T[]... valuesList )
     {
         String preQuery = insertBuilder.insertSimple( table, valuesList );
 
