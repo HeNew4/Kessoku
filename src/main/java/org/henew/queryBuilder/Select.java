@@ -18,7 +18,15 @@ public class Select extends Concatenate
 
     public Select select( String table, String... columnNames )
     {
-        selectQuery = buildSelectQuery( concatenate.simple( columnNames ), table, 1 );
+        if ( columnNames == null || columnNames.length == 0 )
+        {
+            selectQuery = buildSelectQuery( "*", table, 1 );
+        }
+        else
+        {
+            selectQuery = buildSelectQuery( concatenate.simple( columnNames ), table, 1 );
+        }
+
         return this;
     }
 

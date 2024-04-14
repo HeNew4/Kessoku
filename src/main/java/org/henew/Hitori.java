@@ -4,6 +4,7 @@ import org.henew.queryBuilder.Select;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,7 +62,10 @@ public interface Hitori extends Starry
     {
         String preQuery = selectBuilder.select( table, columnNames ).where( condition ).build();
 
-        System.out.println( preQuery );
+        if ( columnNames == null || columnNames.length == 0 )
+        {
+            System.out.println( Arrays.toString( executeQueryAndProcessResults( preQuery ) ) );
+        }
 
         return executeQueryAndProcessResults( preQuery )[ 0 ];
     }
