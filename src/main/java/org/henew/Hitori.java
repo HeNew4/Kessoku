@@ -85,8 +85,8 @@ public interface Hitori extends Starry
         ResultSet resultSet = queryExecute( query );
 
         // Column information
-        ResultSetMetaData metaData = resultSet.getMetaData();
-        int numColumnas = metaData.getColumnCount();
+        ResultSetMetaData metaData    = resultSet.getMetaData();
+        int               numColumnas = metaData.getColumnCount();
 
         // Iterating through the results
         while ( resultSet.next() )
@@ -108,6 +108,41 @@ public interface Hitori extends Starry
         processedInformation = data.toArray( processedInformation );
 
         return processedInformation;
+    }
+
+    /**
+     * Realiza un join interno entre dos tablas basado en una condición dada y devuelve los resultados como un arreglo de mapas.
+     *
+     * @param table1      la primera tabla para realizar el join
+     * @param table2      la segunda tabla para realizar el join
+     * @param condition   la condición para el join (por ejemplo, "table1.id = table2.table1_id")
+     * @param columnNames los nombres de las columnas a seleccionar (si no se proporcionan, se seleccionarán todas las columnas)
+     * @return un arreglo de mapas, donde cada mapa representa una fila del conjunto de resultados y mapea los nombres de columna a sus valores correspondientes
+     * @throws SQLException si ocurre un error de acceso a la base de datos o la consulta es rechazada
+     */
+    default Map<String, Object>[] joinTables( String table1, String table2, String condition,
+                                              String... columnNames ) throws SQLException
+    {
+        // Preparar la consulta antes de ejecutarla
+        String preQuery = selectBuilder.select( table1, columnNames ).join( table2, condition ).build();
+
+        return executeQueryAndProcessResults( preQuery );
+    }
+
+    /**
+     * Realiza un join interno entre la tabla 'registra' y otra tabla basado en una condición dada, y devuelve los resultados como un arreglo de mapas.
+     *
+     * @param otherTable  la otra tabla para realizar el join con la tabla 'registra'
+     * @param condition   la condición para el join (por ejemplo, "registra.id = otherTable.registra_id")
+     * @param columnNames los nombres de las columnas a seleccionar (si no se proporcionan, se seleccionarán todas las columnas)
+     * @return un arreglo de mapas, donde cada mapa representa una fila del conjunto de resultados y mapea los nombres de columna a sus valores correspondientes
+     * @throws SQLException si ocurre un error de acceso a la base de datos o la consulta es rechazada
+     */
+    default Map<String, Object>[] joinRegistra(String otherTable, String condition, String... columnNames) throws SQLException {
+        // Preparar la consulta antes de ejecutarla
+        String preQuery = selectBuilder.select("registra", columnNames).join(otherTable, condition).build();
+
+        return executeQueryAndProcessResults(preQuery);
     }
 
 }

@@ -4,12 +4,14 @@ public class Select extends Concatenate
 {
 
     private static final String SELECT_PREFIX = "SELECT ";
-    private static final String FROM_PREFIX = " FROM ";
-    private static final String LIMIT_PREFIX = " LIMIT ";
-    private static final String WHERE_PREFIX = " WHERE ";
+    private static final String FROM_PREFIX   = " FROM ";
+    private static final String LIMIT_PREFIX  = " LIMIT ";
+    private static final String WHERE_PREFIX  = " WHERE ";
+    private static final String JOIN_PREFIX   = " INNER JOIN ";
+    private static final String ON_PREFIX     = " ON ";
 
     private final Concatenate concatenate;
-    private String selectQuery;
+    private       String      selectQuery;
 
     public Select()
     {
@@ -45,6 +47,12 @@ public class Select extends Concatenate
     public Select where( String condition )
     {
         selectQuery += WHERE_PREFIX + condition;
+        return this;
+    }
+
+    public Select join( String table, String condition )
+    {
+        selectQuery += JOIN_PREFIX + table + ON_PREFIX + condition;
         return this;
     }
 
